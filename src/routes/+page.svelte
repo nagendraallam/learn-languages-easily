@@ -10,7 +10,9 @@
   var score = 0;
   var loading = true;
 
-  onMount(async () => {
+  onStart();
+
+  async function onStart() {
     const res = await fetch(
       "https://server.nagendraallam.com/api/v1/get-random-word",
       {
@@ -43,10 +45,12 @@
         return res.json();
       })
       .then((data) => {
+        // shuffle data array
+        data.spanish.sort(() => Math.random() - 0.5);
         quiz = data;
         loading = false;
       });
-  });
+  }
 
   async function refresh() {
     await fetch("https://server.nagendraallam.com/api/v1/get-random-word", {
@@ -91,6 +95,8 @@
             return res.json();
           })
           .then((data) => {
+            // shuffle data array
+            data.spanish.sort(() => Math.random() - 0.5);
             quiz = data;
             loading = false;
           });
